@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - ATS Resume Maker</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #007bff, #6ec1e4);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      width: 100%;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+      color: white;
+    }
+
+    header a {
+      color: white;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .dashboard-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .dashboard-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      width: 500px;
+      text-align: center;
+    }
+
+    .dashboard-card h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="file"], textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f1f9ff;
+      color: #333;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">ATS Resume Maker</a>
+    <a href="index.html" style="color: white; text-decoration: none;">Logout</a>
+  </header>
+
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <h2>Generate Your ATS Resume</h2>
+      
+      <form id="resumeForm">
+        <!-- Resume Upload -->
+        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" required>
+        
+        <!-- Job Description -->
+        <textarea id="jobDescription" placeholder="Paste Job Description here..." required></textarea>
+        
+        <!-- Generate Button -->
+        <button type="submit">Generate Resume</button>
+      </form>
+
+      <!-- Result Section -->
+      <div class="result" id="resultBox"></div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("resumeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const resumeFile = document.getElementById("resumeFile").files[0];
+      const jobDescription = document.getElementById("jobDescription").value;
+      const resultBox = document.getElementById("resultBox");
+
+      if (!resumeFile || !jobDescription.trim()) {
+        alert("Please upload a resume and paste job description!");
+        return;
+      }
+
+      // For now, just simulate
+      resultBox.style.display = "block";
+      resultBox.innerHTML = `
+        <strong>Resume Uploaded:</strong> ${resumeFile.name} <br><br>
+        <strong>Job Description Word Count:</strong> ${jobDescription.trim().split(/\s+/).length} words <br><br>
+        ✅ Your ATS resume will be generated here (simulation).
+      `;
+    });
+  </script>
+</body>
+</html>
