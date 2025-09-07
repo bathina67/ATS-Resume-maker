@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - ATS Resume Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .btn-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center fixed w-full top-0 z-10">
+    <a href="index.html" class="text-2xl font-bold text-blue-600">ATS Resume Maker</a>
+    <div class="space-x-4">
+      <a href="login.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg btn-hover">Login</a>
+      <a href="signup.html" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg btn-hover">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Sign Up Card -->
+  <div class="flex flex-1 items-center justify-center pt-24 px-4 mb-12">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-4">
+
+      <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Sign Up</h2>
+
+      <!-- Sign Up Form -->
+      <form id="signupForm">
+        <input type="text" placeholder="Full Name" id="fullname" class="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="email" placeholder="Email" id="email" class="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="password" placeholder="Password" id="password" class="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold btn-hover">Sign Up</button>
+      </form>
+
+      <!-- Login Link -->
+      <p class="text-center text-gray-600 mt-4">
+        Already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login</a>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6 w-full mt-auto">
+    <p>© 2025 ATS Resume Maker. All rights reserved.</p>
+    <div class="mt-2 space-x-4">
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+      <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const signupForm = document.getElementById("signupForm");
+    signupForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      alert("Sign Up Successful! You can now login.");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

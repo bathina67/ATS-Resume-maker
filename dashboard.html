@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - ATS Resume Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    /* Button Hover Zoom & Glow */
+    .btn-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.6); /* Blue glow */
+      background: #2563eb; /* Darker blue on hover */
+    }
+    /* Card hover */
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center w-full fixed top-0 z-10">
+    <a href="index.html" class="text-2xl font-bold text-blue-600">ATS Resume Maker</a>
+    <button id="logoutBtn" class="px-4 py-2 bg-red-500 text-white rounded-lg btn-hover">Logout</button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="flex-1 flex flex-col items-center justify-start pt-28 px-4 w-full mb-12">
+    <div class="bg-white rounded-3xl shadow-xl p-8 max-w-2xl w-full space-y-6 card-hover">
+      
+      <!-- Welcome -->
+      <h1 class="text-3xl font-bold text-center text-gray-800">Welcome, <span id="userFirstName">User</span>!</h1>
+      <p class="text-gray-600 text-center text-sm md:text-base">Upload your old resume, paste the job description, and generate an ATS-friendly resume in one click.</p>
+      
+      <!-- Upload Resume -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700">Upload Resume</label>
+        <input type="file" class="w-full border rounded-lg p-2">
+      </div>
+
+      <!-- Job Description -->
+      <div>
+        <label class="block mb-1 font-semibold text-gray-700">Job Description</label>
+        <textarea id="jobDesc" class="w-full border rounded-lg p-3 h-28" placeholder="Paste your job description here..."></textarea>
+      </div>
+
+      <!-- Generate Resume Button -->
+      <button id="generateBtn" class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold btn-hover text-lg">Generate Resume</button>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6 mt-auto w-full">
+    <p>© 2025 ATS Resume Maker. All rights reserved.</p>
+    <div class="mt-2 space-x-4">
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+      <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Set first name
+    const fullName = "Bathina Hemanth";
+    const firstName = fullName.split(" ")[0];
+    document.getElementById("userFirstName").textContent = firstName;
+
+    // Logout button
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      window.location.href = "login.html";
+    });
+
+    // Generate button click simulation
+    const generateBtn = document.getElementById("generateBtn");
+    generateBtn.addEventListener("click", function() {
+      const jobDesc = document.getElementById("jobDesc").value;
+      if (!jobDesc.trim()) {
+        alert("Please paste the Job Description!");
+        return;
+      }
+
+      // Simulate generation
+      generateBtn.disabled = true;
+      generateBtn.textContent = "Generating...";
+      generateBtn.classList.add("opacity-70");
+      setTimeout(() => {
+        generateBtn.disabled = false;
+        generateBtn.textContent = "Generate Resume";
+        generateBtn.classList.remove("opacity-70");
+        alert("Resume generated successfully!");
+      }, 1500); // Simulated processing delay
+    });
+  </script>
+</body>
+</html>

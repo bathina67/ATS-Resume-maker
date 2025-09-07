@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - ATS Resume Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .btn-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md p-4 flex justify-between items-center fixed w-full top-0 z-10">
+    <a href="index.html" class="text-2xl font-bold text-blue-600">ATS Resume Maker</a>
+    <div class="space-x-4">
+      <a href="login.html" class="px-4 py-2 bg-blue-600 text-white rounded-lg btn-hover">Login</a>
+      <a href="signup.html" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg btn-hover">Sign Up</a>
+    </div>
+  </nav>
+
+  <!-- Login Card -->
+  <div class="flex flex-1 items-center justify-center pt-24 px-4 mb-12">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-4">
+
+      <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Login</h2>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <input type="email" placeholder="Email" id="email" class="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <input type="password" placeholder="Password" id="password" class="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold btn-hover">Login</button>
+      </form>
+
+      <!-- Forgot Password -->
+      <div class="text-center mt-2">
+        <a href="forgot-password.html" class="text-blue-600 hover:underline">Forgot Password?</a>
+      </div>
+
+      <!-- Divider -->
+      <div class="flex items-center my-4">
+        <hr class="flex-1 border-gray-300">
+        <span class="px-3 text-gray-500">or</span>
+        <hr class="flex-1 border-gray-300">
+      </div>
+
+      <!-- Social Login -->
+      <div class="space-y-3">
+        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" class="w-5 h-5" alt="Google">
+          Continue with Google
+        </button>
+        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" class="w-5 h-5" alt="Facebook">
+          Continue with Facebook
+        </button>
+        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" class="w-5 h-5" alt="Apple">
+          Continue with Apple
+        </button>
+      </div>
+
+      <!-- Sign Up Link -->
+      <p class="text-center text-gray-600 mt-4">
+        Don’t have an account? <a href="signup.html" class="text-blue-600 hover:underline">Sign Up</a>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6 w-full">
+    <p>© 2025 ATS Resume Maker. All rights reserved.</p>
+    <div class="mt-2 space-x-4">
+      <a href="about.html" class="hover:underline">About</a>
+      <a href="contact.html" class="hover:underline">Contact</a>
+      <a href="privacy.html" class="hover:underline">Privacy Policy</a>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      if(email === "bathinahemanth007@gmail.com" && password === "12345"){
+        alert("Login Successful!");
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid Credentials!");
+      }
+    });
+  </script>
+</body>
+</html>
