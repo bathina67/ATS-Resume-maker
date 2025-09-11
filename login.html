@@ -120,8 +120,9 @@
         // Redirect to dashboard
         window.location.href = "dashboard.html";
       } catch (error) {
-        console.error(error);
-        alert("Google Sign-In failed!");
+        console.error("Google Sign-In failed:", error);
+        // Show error immediately
+        alert("Google Sign-In failed: " + error.message);
       }
     });
 
