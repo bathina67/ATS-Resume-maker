@@ -50,7 +50,7 @@
 
       <!-- Social Sign Up -->
       <div class="space-y-3">
-        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+        <button id="googleSignup" class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" class="w-5 h-5" alt="Google">
           Sign Up with Google
         </button>
@@ -82,9 +82,41 @@
     </div>
   </footer>
 
-  <script>
-    lucide.createIcons();
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
+    // Firebase Config (your values from Firebase console)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCK521QDhGDOanOo9v7tFU8MWS23w8ckrU",
+      authDomain: "ats-resume-maker-60d0a.firebaseapp.com",
+      projectId: "ats-resume-maker-60d0a",
+      storageBucket: "ats-resume-maker-60d0a.appspot.com",
+      messagingSenderId: "775894392306",
+      appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
+      measurementId: "G-QM6TL7NMNB"
+    };
+
+    // Init Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Google Signup
+    document.getElementById("googleSignup").addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        alert(`Welcome ${user.displayName || "User"}! Your account is created.`);
+        window.location.href = "index.html"; // redirect after signup
+      } catch (error) {
+        alert("Google Sign-Up failed: " + error.message);
+      }
+    });
+
+    // Form Signup
     const signupForm = document.getElementById("signupForm");
     signupForm.addEventListener("submit", function(e){
       e.preventDefault();
