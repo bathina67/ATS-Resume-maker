@@ -68,4 +68,47 @@
       projectId: "ats-resume-maker-60d0a",
       storageBucket: "ats-resume-maker-60d0a.firebasestorage.app",
       messagingSenderId: "775894392306",
-      app
+      appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
+      measurementId: "G-QM6TL7NMNB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Check user auth state
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const firstName = (user.displayName || user.email.split("@")[0]);
+        document.getElementById("userFirstName").textContent = firstName;
+      } else {
+        window.location.href = "login.html";
+      }
+    });
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+
+    // Resume generation simulation
+    const generateBtn = document.getElementById("generateBtn");
+    generateBtn.addEventListener("click", () => {
+      const jobDesc = document.getElementById("jobDesc").value;
+      if (!jobDesc.trim()) {
+        alert("Please paste the Job Description!");
+        return;
+      }
+      generateBtn.disabled = true;
+      generateBtn.textContent = "Generating...";
+      generateBtn.classList.add("opacity-70");
+      setTimeout(() => {
+        generateBtn.disabled = false;
+        generateBtn.textContent = "Generate Resume";
+        generateBtn.classList.remove("opacity-70");
+        alert("Resume generated successfully!");
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
