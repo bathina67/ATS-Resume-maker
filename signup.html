@@ -54,7 +54,7 @@
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" class="w-5 h-5" alt="Google">
           Sign Up with Google
         </button>
-        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+        <button id="facebookSignup" class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" class="w-5 h-5" alt="Facebook">
           Sign Up with Facebook
         </button>
@@ -85,7 +85,7 @@
   <!-- Firebase SDKs -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
     // Firebase Config (your values from Firebase console)
     const firebaseConfig = {
@@ -101,22 +101,36 @@
     // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
 
-    // Google Signup
+    // Google Provider
+    const googleProvider = new GoogleAuthProvider();
     document.getElementById("googleSignup").addEventListener("click", async (e) => {
       e.preventDefault();
       try {
-        const result = await signInWithPopup(auth, provider);
+        const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
-        alert(`Welcome ${user.displayName || "User"}! Your account is created.`);
-        window.location.href = "index.html"; // redirect after signup
+        alert(`Welcome ${user.displayName || "User"}! Your account is created with Google.`);
+        window.location.href = "index.html";
       } catch (error) {
         alert("Google Sign-Up failed: " + error.message);
       }
     });
 
-    // Form Signup
+    // Facebook Provider
+    const facebookProvider = new FacebookAuthProvider();
+    document.getElementById("facebookSignup").addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        const result = await signInWithPopup(auth, facebookProvider);
+        const user = result.user;
+        alert(`Welcome ${user.displayName || "User"}! Your account is created with Facebook.`);
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Facebook Sign-Up failed: " + error.message);
+      }
+    });
+
+    // Manual Form Signup
     const signupForm = document.getElementById("signupForm");
     signupForm.addEventListener("submit", function(e){
       e.preventDefault();

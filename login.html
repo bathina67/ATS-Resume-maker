@@ -59,7 +59,7 @@
           Continue with Google
         </button>
 
-        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+        <button id="facebookLogin" class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" class="w-5 h-5" alt="Facebook">
           Continue with Facebook
         </button>
@@ -91,7 +91,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     // Your Firebase config
     const firebaseConfig = {
@@ -108,21 +108,36 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+
+    // Providers
+    const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
 
     // Handle Google Sign-In
     document.getElementById("googleLogin").addEventListener("click", async () => {
       try {
-        const result = await signInWithPopup(auth, provider);
+        const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
         alert(`Welcome ${user.displayName}!`);
-        console.log("User Info:", user);
-        // Redirect to dashboard
+        console.log("Google User Info:", user);
         window.location.href = "dashboard.html";
       } catch (error) {
         console.error("Google Sign-In failed:", error);
-        // Show error immediately
         alert("Google Sign-In failed: " + error.message);
+      }
+    });
+
+    // Handle Facebook Sign-In
+    document.getElementById("facebookLogin").addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, facebookProvider);
+        const user = result.user;
+        alert(`Welcome ${user.displayName}!`);
+        console.log("Facebook User Info:", user);
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        console.error("Facebook Sign-In failed:", error);
+        alert("Facebook Sign-In failed: " + error.message);
       }
     });
 
