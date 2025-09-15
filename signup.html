@@ -29,7 +29,6 @@
   <!-- Sign Up Card -->
   <div class="flex flex-1 items-center justify-center pt-24 px-4 mb-12">
     <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md space-y-4">
-
       <h2 class="text-2xl font-bold mb-4 text-center text-blue-600">Sign Up</h2>
 
       <!-- Sign Up Form -->
@@ -82,69 +81,71 @@
     </div>
   </footer>
 
-  <!-- Firebase SDKs -->
+  <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    // Firebase Config (your values from Firebase console)
-    const firebaseConfig = {
-      apiKey: "AIzaSyCK521QDhGDOanOo9v7tFU8MWS23w8ckrU",
-      authDomain: "ats-resume-maker-60d0a.firebaseapp.com",
-      projectId: "ats-resume-maker-60d0a",
-      storageBucket: "ats-resume-maker-60d0a.appspot.com",
-      messagingSenderId: "775894392306",
-      appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
-      measurementId: "G-QM6TL7NMNB"
-    };
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCK521QDhGDOanOo9v7tFU8MWS23w8ckrU",
+  authDomain: "ats-resume-maker-60d0a.firebaseapp.com",
+  projectId: "ats-resume-maker-60d0a",
+  storageBucket: "ats-resume-maker-60d0a.firebasestorage.app",
+  messagingSenderId: "775894392306",
+  appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
+  measurementId: "G-QM6TL7NMNB"
+};
+  
 
-    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Google Provider
+    const signupForm = document.getElementById("signupForm");
+    signupForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const repassword = document.getElementById("repassword").value;
+
+      if (password !== repassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Sign Up Successful! Please login with your credentials.");
+        window.location.href = "login.html";
+      } catch (error) {
+        alert("Sign Up Failed: " + error.message);
+      }
+    });
+
+    // Social signups (same as before)
     const googleProvider = new GoogleAuthProvider();
     document.getElementById("googleSignup").addEventListener("click", async (e) => {
       e.preventDefault();
       try {
         const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-        alert(`Welcome ${user.displayName || "User"}! Your account is created with Google.`);
-        window.location.href = "index.html";
+        alert(`Welcome ${result.user.displayName || "User"}!`);
+        window.location.href = "login.html";
       } catch (error) {
-        alert("Google Sign-Up failed: " + error.message);
+        alert("Google Sign-Up Failed: " + error.message);
       }
     });
 
-    // Facebook Provider
     const facebookProvider = new FacebookAuthProvider();
     document.getElementById("facebookSignup").addEventListener("click", async (e) => {
       e.preventDefault();
       try {
         const result = await signInWithPopup(auth, facebookProvider);
-        const user = result.user;
-        alert(`Welcome ${user.displayName || "User"}! Your account is created with Facebook.`);
-        window.location.href = "index.html";
+        alert(`Welcome ${result.user.displayName || "User"}!`);
+        window.location.href = "login.html";
       } catch (error) {
-        alert("Facebook Sign-Up failed: " + error.message);
+        alert("Facebook Sign-Up Failed: " + error.message);
       }
-    });
-
-    // Manual Form Signup
-    const signupForm = document.getElementById("signupForm");
-    signupForm.addEventListener("submit", function(e){
-      e.preventDefault();
-
-      const password = document.getElementById("password").value;
-      const repassword = document.getElementById("repassword").value;
-
-      if(password !== repassword) {
-        alert("Passwords do not match! Please re-enter.");
-        return;
-      }
-
-      alert("Sign Up Successful! You can now login.");
-      window.location.href = "login.html";
     });
   </script>
 </body>

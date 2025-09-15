@@ -6,7 +6,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    /* Zoom effect for buttons */
     .btn-hover {
       transition: transform 0.3s ease, box-shadow 0.3s ease !important;
     }
@@ -63,6 +62,10 @@
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg" class="w-5 h-5" alt="Facebook">
           Continue with Facebook
         </button>
+        <button class="w-full flex items-center justify-center gap-2 border py-3 rounded-lg btn-hover">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg" class="w-5 h-5" alt="Apple">
+          Continue with Apple
+        </button>
       </div>
 
       <!-- Sign Up Link -->
@@ -83,62 +86,62 @@
     </div>
   </footer>
 
-  <!-- Firebase + Auth -->
+  <!-- Firebase SDK -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-    // Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCK521QDhGDOanOo9v7tFU8MWS23w8ckrU",
-      authDomain: "ats-resume-maker-60d0a.firebaseapp.com",
-      projectId: "ats-resume-maker-60d0a",
-      storageBucket: "ats-resume-maker-60d0a.firebasestorage.app",
-      messagingSenderId: "775894392306",
-      appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
-      measurementId: "G-QM6TL7NMNB"
-    };
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCK521QDhGDOanOo9v7tFU8MWS23w8ckrU",
+  authDomain: "ats-resume-maker-60d0a.firebaseapp.com",
+  projectId: "ats-resume-maker-60d0a",
+  storageBucket: "ats-resume-maker-60d0a.firebasestorage.app",
+  messagingSenderId: "775894392306",
+  appId: "1:775894392306:web:bedd4534cf853d7e739f6b",
+  measurementId: "G-QM6TL7NMNB"
+};
 
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const auth = getAuth(app);
-
-    const googleProvider = new GoogleAuthProvider();
-    const facebookProvider = new FacebookAuthProvider();
-
-    // Google Login
-    document.getElementById("googleLogin").addEventListener("click", async () => {
-      try {
-        const result = await signInWithPopup(auth, googleProvider);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        alert("Google Sign-In failed: " + error.message);
-      }
-    });
-
-    // Facebook Login
-    document.getElementById("facebookLogin").addEventListener("click", async () => {
-      try {
-        const result = await signInWithPopup(auth, facebookProvider);
-        window.location.href = "dashboard.html";
-      } catch (error) {
-        alert("Facebook Sign-In failed: " + error.message);
-      }
-    });
 
     // Email/Password Login
     const loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener("submit", async (e) => {
+    loginForm.addEventListener("submit", async function(e){
       e.preventDefault();
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        alert("Login Successful! Welcome " + (userCredential.user.email));
         window.location.href = "dashboard.html";
       } catch (error) {
-        alert("Login failed: " + error.message);
+        alert("Login Failed: " + error.message);
+      }
+    });
+
+    // Google Login
+    const googleProvider = new GoogleAuthProvider();
+    document.getElementById("googleLogin").addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        alert("Welcome " + (result.user.displayName || result.user.email));
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        alert("Google Sign-In Failed: " + error.message);
+      }
+    });
+
+    // Facebook Login
+    const facebookProvider = new FacebookAuthProvider();
+    document.getElementById("facebookLogin").addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, facebookProvider);
+        alert("Welcome " + (result.user.displayName || result.user.email));
+        window.location.href = "dashboard.html";
+      } catch (error) {
+        alert("Facebook Sign-In Failed: " + error.message);
       }
     });
   </script>
